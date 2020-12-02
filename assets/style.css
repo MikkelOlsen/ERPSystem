@@ -1,0 +1,61 @@
+#main{
+  height: 100vh;
+  width: 100vw;
+}
+
+#menu {
+  background-color: #272727;
+  height: 100vh;
+  box-sizing: content-box;
+    font-weight: bold;
+}
+
+#menu > .section {
+  box-sizing: border-box;
+  padding-top: 20px;
+}
+
+
+
+#menu .menu-label {
+  font-weight: bold;
+  font-size: 1em;
+}
+
+#menu #logo {
+  font-size: 3em;
+  padding-top: 10px;
+  padding-left: 50px;
+  text-decoration: underline;
+  text-decoration-color: #14A76C;
+}
+
+#menu #logo h2 span {
+  color: #14A76C;
+}
+
+.menu-list a.is-active {
+  background-color: #14A76C;
+  color: #272727;
+}
+
+.menu-list a:hover {
+  background-color: #14A76C;
+  color: #272727;
+}
+
+.menu-list li ul {
+  border-left: 1px solid #14A76C;
+}
+
+.menu a, .menu p{
+  color: #747474;
+}
+
+#system {
+  height: 100vh
+}
+
+#system .section {
+  padding-top: 30px;
+}
