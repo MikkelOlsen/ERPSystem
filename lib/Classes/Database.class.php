@@ -15,12 +15,10 @@ class Database extends \PDO
                 PDO::ATTR_TIMEOUT => 10,
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
-                PDO::ATTR_PERSISTENT => false,
-                PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
-              	PDO::MYSQL_ATTR_SSL_CA => 'cleardb-ca.pem',
-              	PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+                PDO::ATTR_PERSISTENT => true,
             );
-            $this->conn = new PDO("mysql: host="._DB_HOST_.";dbname="._DB_NAME_.";charset=utf8", _DB_USER_, _DB_PASSWORD_);
+            $this->conn = new PDO("mysql: host="._DB_HOST_.";dbname="._DB_NAME_.";charset=utf8", _DB_USER_, _DB_PASSWORD_, $pdoOptions);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->connected = true;
         }
         catch(PDOException $err)
