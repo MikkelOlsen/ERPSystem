@@ -25,8 +25,8 @@ class Invoice extends Database
         return false;
     }
 
-    private static function getInvoice() : array {
-      return (new self)->query("SELECT * FROM estimations")->fetchAll();      
+    public static function getInvoice() : array {
+      return (new self)->query("SELECT * FROM estimations")->fetchAll();
     }
 
 }
