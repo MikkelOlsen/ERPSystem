@@ -1,4 +1,7 @@
 <?php
   echo "Hello World! - Heroku works!";
-  var_dump(Invoice::getInvoice());
+
+$url = parse_url(getenv("mysql://b1140bd4539d94:dd30aefb@eu-cdbr-west-03.cleardb.net/heroku_10c337ec6ca316c?reconnect=true"));
+
+  var_dump($url);
  ?>
