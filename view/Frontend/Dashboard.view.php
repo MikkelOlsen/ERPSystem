@@ -1,7 +1,7 @@
 <?php
   echo "Hello World! - Heroku works!</br> TEST v4 </br>";
 
-$url = parse_url(getenv("mysql://b1140bd4539d94:dd30aefb@eu-cdbr-west-03.cleardb.net/heroku_10c337ec6ca316c?reconnect=true"));
+$url = parse_url(getenv("mysql://b84ca7ccb58e60:e465574d@eu-cdbr-west-03.cleardb.net/heroku_d892474fb75fe82?reconnect=true"));
 
   var_dump($url);
 
