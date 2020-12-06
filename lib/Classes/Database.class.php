@@ -17,7 +17,7 @@ class Database extends \PDO
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
                 PDO::ATTR_PERSISTENT => false
             );
-            $this->conn = new PDO("mysql: host="._DB_HOST_.";dbname="._DB_NAME_.";charset=utf8", _DB_USER_, _DB_PASSWORD_, $pdoOptions);
+            $this->conn = new PDO("mysql: host="._DB_HOST_.";port="._DB_PORT_.";dbname="._DB_NAME_.";charset=utf8", _DB_USER_, _DB_PASSWORD_, $pdoOptions);
             $this->connected = true;
         }
         catch(PDOException $err)
@@ -33,7 +33,7 @@ class Database extends \PDO
         {
             $this->query->execute($params);
         }
-        else 
+        else
         {
             $this->query->execute();
         }
