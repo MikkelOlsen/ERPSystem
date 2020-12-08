@@ -10,6 +10,16 @@
     [
       'path' => '/Invoice',
       'view' => 'Frontend'.DS.'Invoices.view.php'
-      ]
+    ],
+    [
+      'path' => '/Api/Services',
+      'view' => 'Api'.DS.'Services.view.php',
+      'layout' => 'Api'
+    ],
+    [
+      'path' => '/Api/Invoice',
+      'view' => 'Api'.DS.'Invoice.view.php',
+      'layout' => 'Api'
+    ]
   );
 ?>

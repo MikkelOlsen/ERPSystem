@@ -15,8 +15,6 @@
 </head>
 
 <body>
-
-  <body>
     <div id="main">
       <div class="columns">
         <div class="column is-narrow" id="menu">
@@ -30,6 +28,8 @@
       </div>
     </div>
   </body>
-</body>
+  <footer>
+    <p id="baseurl"><?= Router::$BASE ?></p>
+  </footer>
 
 </html>

@@ -43,4 +43,17 @@ class Invoice extends Database
                                 WHERE invoice.id = :ID", [':ID' => $id])->fetch();
     }
 
+    public static function updateInvoice(String $id) {
+      try {
+        (new self)->query("UPDATE invoice SET approved = 1 WHERE id = :ID", 
+        [
+          ':ID' => $id
+        ]);
+        return true;
+      } catch (PDOException $e) {
+        echo $e->getMessage();
+        return false;
+      }
+    }
+
 }
