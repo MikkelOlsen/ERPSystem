@@ -6,6 +6,10 @@
     [
       'path' => '/Dashboard',
       'view' => 'Frontend'.DS.'Dashboard.view.php'
-    ]
+    ],
+    [
+      'path' => '/Invoice',
+      'view' => 'Frontend'.DS.'Invoices.view.php'
+      ]
   );
 ?>

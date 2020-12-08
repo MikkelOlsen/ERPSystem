@@ -3,6 +3,10 @@
   width: 100vw;
 }
 
+html {
+  overflow: hidden !important;
+}
+
 #menu {
   background-color: #272727;
   height: 100vh;
@@ -58,4 +62,16 @@
 
 #system .section {
   padding-top: 30px;
+  max-height: 100vh;
+  overflow-y: auto;
 }
+
+#invoiceTable {
+  width: 100%;
+  margin-top: 100px;
+}
+
+#modalTable {
+  width: 100%;
+}
+

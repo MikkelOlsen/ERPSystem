@@ -1,9 +1,28 @@
-<?php
-  echo "Hello World! - Heroku works!</br> TEST v5 </br>";
+ <div class="box">
+ <nav class="level">
+  <div class="level-item has-text-centered">
+    <div>
+      <p class="heading">Total invoices</p>
+      <p class="title"><?= count(Invoice::fetchAllInvoices()) ?></p>
+    </div>
+  </div>
+  <div class="level-item has-text-centered">
+    <div>
+      <p class="heading">Invoices not approved</p>
+      <p class="title"><?= count(Invoice::fetchNotApprovedInvoices()) ?></p>
+    </div>
+  </div>
+  <div class="level-item has-text-centered">
+    <div>
+      <p class="heading">Invoices approved</p>
+      <p class="title"><?= count(Invoice::fetchApprovedInvoices()) ?></p>
+    </div>
+  </div>
+</nav>
+ </div>
 
-$url = parse_url(getenv("mysql://b84ca7ccb58e60:e465574d@eu-cdbr-west-03.cleardb.net/heroku_d892474fb75fe82?reconnect=true"));
-
-  var_dump($url);
-
-  var_dump(Invoice::getInvoice());
- ?>
+<pre>
+  <?php
+    var_dump(Invoice::fetchAllInvoices());
+  ?>
+  </pre>

@@ -8,7 +8,9 @@
   <title>ERPSystem</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
   <link rel="stylesheet" href="<?= Router::$BASE ?>assets/style.css">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="<?= Router::$BASE ?>assets/script.js"></script>
 
 </head>
 
@@ -18,7 +20,7 @@
     <div id="main">
       <div class="columns">
         <div class="column is-narrow" id="menu">
-          <?php require_once __ROOT__ . DS . 'includes' . DS . 'menu.html' ?>
+          <?php require_once __ROOT__ . DS . 'includes' . DS . 'Menu.php' ?>
         </div>
         <div class="column" id="system">
           <section class="section">

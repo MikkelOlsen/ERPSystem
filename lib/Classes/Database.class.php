@@ -18,7 +18,6 @@ class Database extends \PDO
                 PDO::ATTR_PERSISTENT => true,
             );
             $this->conn = new PDO("mysql: host="._DB_HOST_.";dbname="._DB_NAME_.";charset=utf8", _DB_USER_, _DB_PASSWORD_, $pdoOptions);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->connected = true;
         }
         catch(PDOException $err)
