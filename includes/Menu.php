@@ -9,7 +9,6 @@
         </p>
         <ul class="menu-list">
           <li><a href="<?= Router::$BASE ?>Dashboard">Dashboard</a></li>
-          <li><a href="<?= Router::$BASE ?>invoice">Your invoices</a></li>
         </ul>
         <p class="menu-label">
           System

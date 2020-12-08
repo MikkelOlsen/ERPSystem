@@ -68,10 +68,13 @@ html {
 
 #invoiceTable {
   width: 100%;
-  margin-top: 100px;
 }
 
 #modalTable {
   width: 100%;
+}
+
+.subtitle {
+  margin-top: 100px;
 }
 
