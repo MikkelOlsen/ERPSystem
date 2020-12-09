@@ -44,14 +44,6 @@ function updateServices() {
 }
 
 function updateInvoice() {
-    var postData = []
-
-    $('#invoiceRow-' + event.target.id + ' td').each(function() {
-        postData.push($(this).text())
-    })
-    
-
-
         $.ajax({
             method: 'POST',
             url: $('#baseurl').text() + 'Api/Invoice',
