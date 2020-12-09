@@ -52,9 +52,6 @@ function updateInvoice() {
     
 
 
-    console.log(postData)
-
-
         $.ajax({
             method: 'POST',
             url: $('#baseurl').text() + 'Api/Invoice',
