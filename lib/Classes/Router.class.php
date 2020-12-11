@@ -114,11 +114,6 @@ class Router extends \PDO
     }
 
     foreach(self::$Routes as $routeIndex => $singleRoute) {
-      echo "We're in for each <br>";
-      echo $routingPath;
-      echo '<br>';
-      echo $singleRoute['path'];
-      echo '<br>';
       if(strtolower($routingPath) === strtolower($singleRoute['path'])) {
         self::$RouteIndex = $routeIndex;
         $match = true;
@@ -151,8 +146,31 @@ class Router extends \PDO
   }
 }
 
-var_dump(self::$View);
-
+    if($match == false)  
+    {
+      if(!empty(self::$DefaultRoute) && self::$REQ_ROUTE === '/') 
+      {
+        foreach(self::$Routes as $route) 
+        {
+          if(self::$DefaultRoute == $route['path'])
+          {
+            self::Redirect($route['path']);
+          }
+        }
+      }
+      if(file_exists(self::$ViewFolder . 'Error' . DS . '404.view.php'))
+      {
+        self::Redirect(self::$errorPagePath . '/404' . $path); 
+      }
+      else
+      {
+          header("HTTP/1.0 404 Not Found");
+          exit;
+      }
+    } else if($match == true)
+    {
+      self::$currentRoute = self::$Routes[self::$RouteIndex]['path'];
+    } 
   }
 }
 

@@ -3,6 +3,10 @@
 class Invoice extends Database
 {
 
+  public static function showdb() : array {
+    return (new self)->query("SHOW TABLES")->fetchAll();
+  }
+
 
     public static function fetchAllInvoices() : array {
       return (new self)->query("SELECT
