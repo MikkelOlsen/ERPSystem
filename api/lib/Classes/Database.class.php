@@ -17,7 +17,15 @@ class Database extends \PDO
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
                 PDO::ATTR_PERSISTENT => true,
             );
-            $this->conn = new PDO("mysql: host="._DB_HOST_.";dbname="._DB_NAME_.";charset=utf8", _DB_USER_, _DB_PASSWORD_, $pdoOptions);
+            $dbname = getenv(_DB_HOST_);
+            $socket_dir = getenv('DB_SOCKET_DIR') ?: '/cloudsql';
+            $dsn = sprintf(
+                'mysql:dbname=%s;unix_socket=%s/%s',
+                $dbname,
+                $socket_dir,
+                _DB_HOST_
+            );
+            $this->conn = new PDO($dsn, _DB_USER_, _DB_PASSWORD_, $pdoOptions);
             $this->connected = true;
         }
         catch(PDOException $err)
