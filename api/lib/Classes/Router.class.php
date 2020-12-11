@@ -114,6 +114,11 @@ class Router extends \PDO
     }
 
     foreach(self::$Routes as $routeIndex => $singleRoute) {
+      echo "We're in for each <br>";
+      echo $routingPath;
+      echo '<br>';
+      echo $singleRoute['path'];
+      echo '<br>';
       if(strtolower($routingPath) === strtolower($singleRoute['path'])) {
         self::$RouteIndex = $routeIndex;
         $match = true;
