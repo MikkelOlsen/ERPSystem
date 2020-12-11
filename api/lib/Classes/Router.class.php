@@ -146,7 +146,7 @@ class Router extends \PDO
   }
 }
 
-var_dump(self::$ViewFolder);
+var_dump(self::$View);
 
   }
 }
