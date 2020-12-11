@@ -146,31 +146,8 @@ class Router extends \PDO
   }
 }
 
-    if($match == false)  
-    {
-      if(!empty(self::$DefaultRoute) && self::$REQ_ROUTE === '/') 
-      {
-        foreach(self::$Routes as $route) 
-        {
-          if(self::$DefaultRoute == $route['path'])
-          {
-            self::Redirect($route['path']);
-          }
-        }
-      }
-      if(file_exists(self::$ViewFolder . 'Error' . DS . '404.view.php'))
-      {
-        self::Redirect(self::$errorPagePath . '/404' . $path); 
-      }
-      else
-      {
-          header("HTTP/1.0 404 Not Found");
-          exit;
-      }
-    } else if($match == true)
-    {
-      self::$currentRoute = self::$Routes[self::$RouteIndex]['path'];
-    } 
+var_dump(self::$ViewFolder);
+
   }
 }
 
