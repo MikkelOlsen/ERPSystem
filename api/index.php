@@ -2,7 +2,7 @@
 
     require_once __DIR__ . DIRECTORY_SEPARATOR . 'init.php';
     echo '<pre>';
-    var_dump($_SERVER);
+    var_dump(__DIR__);
     echo '</pre>';
     //Router::init($_SERVER['REQUEST_URI'], ROUTES);
     //CONST ROOT = __DIR__;
