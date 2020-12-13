@@ -45,7 +45,9 @@ def connect_db():
 
 
 def main():
+    print('Main')
     if db_connection:
+        print('db_connected')
         invoices = check_for_new_invoices()  # returns array of invoices
         print(invoices)
         for invoice in invoices:
