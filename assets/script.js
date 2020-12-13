@@ -40,7 +40,7 @@ function updateServices() {
     });
 
     
-    location.reload();
+    //location.reload();
 }
 
 function updateInvoice() {
@@ -61,5 +61,5 @@ function updateInvoice() {
         
 
     
-    location.reload();
+    //location.reload();
 }
