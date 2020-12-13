@@ -107,7 +107,7 @@ def extract_data(invoice):
         if row.lower().__contains__('date:'):
             date = row.split()[-1]
             if date.__contains__('/' or '-'):
-                date = date.replace('/' or '-', '')
+                date = date.replace('_' or '.', '/')
             invoice_data['Date'] = date
         if row.lower().startswith('name:'):
             invoice_data['Name'] = row.lower().replace('name:', '').upper()
@@ -126,7 +126,7 @@ def extract_data(invoice):
                 approved = 0
                 add_service(service, 999999)  # adding service to estimations with cost --> inf if false
             services_data.append({'Description': service, 'Hours': hours, 'Cost': cost, 'Approved': approved})
-            invoice_data['Approved'] = approved.__int__()
+            invoice_data['Approved'] = approved
 
     for v in invoice_data.values():
         v = v.__str__()
@@ -193,8 +193,7 @@ def add_invoice(invoice):
     """
     query = "INSERT INTO invoice (invoiceID, company, date, billedTo, approved) VALUES (%s, %s, %s, %s, %s);"
     values = (
-        int(invoice['Invoice_ID']), invoice['Company'], int(date(invoice['Date'])), invoice['Name'],
-        int(invoice['Approved']))
+        int(invoice['Invoice_ID']), invoice['Company'], invoice['Date']), invoice['Name'], invoice['Approved']
     mycursor.execute(query, values)
     mydb.commit()
     print('Invoice added')
