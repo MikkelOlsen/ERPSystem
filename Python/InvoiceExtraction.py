@@ -42,7 +42,7 @@ def connect_db():
     )
     if mydb:
         print('Database Connection Established.')
-        mycursor = mydb.cursor()  # for executing commands evt. buffered=True
+        mycursor = mydb.cursor(buffered=True)  # for executing commands evt. buffered=True
     db_connection = True
 
 
@@ -198,7 +198,6 @@ def add_invoice(invoice):
     print('Invoice added')
 
     invoice_db_id = mycursor.execute("SELECT id FROM invoice ORDER BY id DESC LIMIT 1;")
-    mycursor.reset()
 
     for s in invoice['Service(s)']:
         query = "INSERT INTO service (invoiceId, name, hours, rate, approved) VALUES (%s, %s, %s, %s, %s);"
