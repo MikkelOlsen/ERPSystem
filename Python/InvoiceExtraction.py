@@ -53,8 +53,7 @@ def main():
                 add_invoice(invoice_data)
             else:  # Due to wrong input data as connection is already established
                 print('Extraction Failure')
-                from_address = invoice.split()[-2].replace('<', '').replace('>',
-                                                                            '')  # as from address is stored in file name
+                from_address = invoice.split()[-2].replace('<', '').replace('>', '')  # as from address is stored in file name
                 # Informing sender
                 SendMail.send_email(from_address)
         update(invoices)
