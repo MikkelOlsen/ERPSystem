@@ -192,8 +192,7 @@ def add_invoice(invoice):
     an array is pushed into a dictionary
     """
     query = "INSERT INTO invoice (invoiceID, company, date, billedTo, approved) VALUES (%s, %s, %s, %s, %s);"
-    values = (
-        int(invoice['Invoice_ID']), invoice['Company'], invoice['Date']), invoice['Name'], invoice['Approved']
+    values = (invoice['Invoice_ID'], invoice['Company'], invoice['Date'], invoice['Name'], invoice['Approved'])
     mycursor.execute(query, values)
     mydb.commit()
     print('Invoice added')
