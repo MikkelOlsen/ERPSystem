@@ -36,7 +36,8 @@ def connect_db():
         host=config['Database']['host'],
         user=config['Database']['user'],
         password=config['Database']['password'],
-        database=config['Database']['database']
+        database=config['Database']['database'],
+        auth_plugin='mysql_native_password'
     )
     if mydb:
         print('Database Connection Established.')
@@ -52,7 +53,8 @@ def main():
                 add_invoice(invoice_data)
             else:  # Due to wrong input data as connection is already established
                 print('Extraction Failure')
-                from_address = invoice.split()[-2].replace('<', '').replace('>', '') # as from address is stored in file name
+                from_address = invoice.split()[-2].replace('<', '').replace('>',
+                                                                            '')  # as from address is stored in file name
                 # Informing sender
                 SendMail.send_email(from_address)
         update(invoices)
@@ -126,7 +128,6 @@ def extract_data(invoice):
             extraction_completed = False
         else:
             extraction_completed = True
-
 
     # pushing array into dictionary to access data of every service (e.g. (l: 140+))
     invoice_data['Service(s)'] = services_data
