@@ -2,6 +2,7 @@ import email
 import imaplib
 import os
 from configparser import ConfigParser
+
 import SendMail
 
 mail = None
@@ -43,23 +44,23 @@ def read_inbox():
     inbox_item_list = data[0].split()  # list of references to emails
     if not inbox_item_list:
         print('No unread emails')
-    for item in inbox_item_list:
-        # Returned data are tuples of message part envelope and data
-        # The latter type of payload is indicated as multipart/* or message/rfc822
-        _, email_data = mail.fetch(item, '(RFC822)')  # returns email in byte form
-        string_email = email_data[0][1].decode("utf-8")  # extracting
-        email_message = email.message_from_string(string_email)  # converting to object
-        if get_invoices(email_message):
-            print('Invoice collected')
-        else:
-            sender_email = email_message['From']
-            SendMail.send_email(sender_email)  # sends default mail
-        mail.uid('STORE', item, '+FLAGS', '\\SEEN')  # marking email as read
+    else:
+        for item in inbox_item_list:
+            # Returned data are tuples of message part envelope and data
+            # The latter type of payload is indicated as multipart/* or message/rfc822
+            _, email_data = mail.fetch(item, '(RFC822)')  # returns email in byte form
+            string_email = email_data[0][1].decode("utf-8")  # extracting
+            email_message = email.message_from_string(string_email)  # converting to object
+            if get_invoices(email_message):
+                print('Invoice collected')
+            else:
+                sender_email = email_message['From']
+                SendMail.send_email(sender_email)  # sends default mail
+            mail.uid('STORE', item, '+FLAGS', '\\SEEN')  # marking email as read
 
 
 def get_invoices(msg):
     sender_email = msg['From']
-    print(sender_email)
     for part in msg.walk():  # iterates through email object
         if part.get_content_maintype() == 'multipart':
             continue  # skipping to next iteration of msg.walk()
