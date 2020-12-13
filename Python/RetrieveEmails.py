@@ -71,6 +71,7 @@ def get_invoices(msg):
         if not file_name.endswith('.pdf'):
             continue
         if bool(file_name):
+            print('test')
             file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Attachment_Dir/new_invoices/', sender_email + '_' + file_name)
             with open(file_path, 'wb') as f:  # wb = wide binary
                 f.write(part.get_payload(decode=True))
