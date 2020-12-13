@@ -1,8 +1,10 @@
 import os
 import shutil
 from configparser import ConfigParser
+
 import mysql.connector
 import pdfplumber
+
 import SendMail
 
 new_invoices_dir = None
@@ -48,11 +50,12 @@ def main():
             completed, invoice_data = extract_data(invoice)
             if completed:
                 add_invoice(invoice_data)
-            else:  # Probably due to wrong input data as connection is already established
+            else:  # Due to wrong input data as connection is already established
                 print('Extraction Failure')
-                from_address = invoice.split()[-2].replace('<', '').replace('>', '')
-                # Due to above theory
+                from_address = invoice.split()[-2].replace('<', '').replace('>', '') # as from address is stored in file name
+                # Informing sender
                 SendMail.send_email(from_address)
+        update(invoices)
 
 
 def check_for_new_invoices():

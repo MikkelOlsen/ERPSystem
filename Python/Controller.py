@@ -1,8 +1,12 @@
+import imaplib
 import time
+
+import mysql.connector.errors
+
 import InvoiceExtraction
 import RetrieveEmails
-import mysql.connector.errors
-import imaplib
+
+running_error_handling = False
 
 
 def search_mailbox():
@@ -15,7 +19,7 @@ def treat_invoice():
 
 def run():
     search_mailbox()
-    treat_invoice()
+    # treat_invoice()
 
 
 def init():
@@ -24,6 +28,8 @@ def init():
 
 
 def error_handling(error):
+    global running_error_handling
+    running_error_handling = True
     print(error)
     print('Waiting for reestablishing ..')
     time.sleep(15)
@@ -31,9 +37,10 @@ def error_handling(error):
 
 
 def main():
+    global running_error_handling
     try:
         init()
-        while not error_handling():
+        while not running_error_handling:
             run()
             time.sleep(5)
     except imaplib.IMAP4_SSL.error as e:
