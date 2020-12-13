@@ -182,7 +182,7 @@ def add_service(service, cost):
     values = (service, int(cost))
     mycursor.execute(query, values)
     mydb.commit()
-    print('Service added')
+    print('Estimation added')
 
 
 def add_invoice(invoice):
@@ -205,4 +205,4 @@ def add_invoice(invoice):
         values = (invoice_db_id, s['Description'], s['Hours'], s['Cost'], int(s['Approved']))
         mycursor.execute(query, values)
         mydb.commit()
-    print('Services added')
+        print('Services added')
