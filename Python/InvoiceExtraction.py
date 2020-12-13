@@ -146,6 +146,7 @@ def estimation_check(item, cost):
     If an estimation exist and diff is smaller that 20 percent
     :return: true/false boolean
     """
+    approved = False
     mycursor.execute("SELECT * FROM estimations;")
     for row in mycursor:
         if item == row[0]:
