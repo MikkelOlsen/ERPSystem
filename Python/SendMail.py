@@ -5,9 +5,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
-def send_email(to_address, message):
-    if not message:  # default
-        message = 'Sorry for the inconvenience but we are experiencing ' \
+def send_email(to_address):
+    message = 'Sorry for the inconvenience but we are experiencing ' \
                   'some issues extracting your invoice<br>due to our new ' \
                   'system. Please visit: <a href="#">instructions</a> in ' \
                   'order to mail us a valid invoice to <br> receive your ' \
