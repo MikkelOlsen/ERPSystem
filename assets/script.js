@@ -48,7 +48,7 @@ function updateInvoice() {
             method: 'POST',
             url: $('#baseurl').text() + 'Api/Invoice',
             data: {
-                id: event.target.id
+                id: JSON.stringify(event.target.id)
             },
             dataType: 'html'
         })

@@ -30,7 +30,6 @@
   </body>
   <footer>
     <p id="baseurl"><?= Router::$BASE ?></p>
-    <?= var_dump(Invoice::showdb()) ?>
   </footer>
 
 </html>
