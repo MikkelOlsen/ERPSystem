@@ -60,7 +60,7 @@ def read_inbox():
 
 
 def get_invoices(msg):
-    global attachment_dir
+    print(attachment_dir)
     sender_email = msg['From']
     for part in msg.walk():  # iterates through email object
         if part.get_content_maintype() == 'multipart':
