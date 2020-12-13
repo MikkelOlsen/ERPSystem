@@ -37,7 +37,7 @@ def error_handling(error):
 def main():
     global running_error_handling
     try:
-        #init()
+        init()
         while not running_error_handling:
             run()
             time.sleep(5)
