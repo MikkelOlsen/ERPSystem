@@ -1,8 +1,6 @@
 import imaplib
 import time
-
-import mysql.connector.errors
-
+import mysql.connector
 import InvoiceExtraction
 import RetrieveEmails
 
