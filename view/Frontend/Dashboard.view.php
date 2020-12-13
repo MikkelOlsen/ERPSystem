@@ -27,7 +27,7 @@
 <table class="table" id="invoiceTable">
   <thead>
     <tr>
-      <th></th>
+      <th>Status</th>
       <th>Company</th>
       <th>Date</th>
       <th>Billed to</th>
@@ -41,13 +41,14 @@
     <?php
         foreach (Invoice::fetchAllInvoices() as $key => $value) {
           $approved = "Approved";
-          $flagged = "";
+          $flagged = '<p><span class="icon has-text-success"><i class="fas fa-check-square"></i></span> Invoice approved</p>';
           $approveButton = '<button class="button is-primary is-fullwidth" onclick="updateInvoice()" title="Disabled button" id="' . $value->invoiceid . '" disabled>Invoice already approved</button>';
 
           if($value->invoiceApproved == "0") {
             $approved = "Not approved";
+            $flagged = '<p><span class="icon has-text-info"><i class="fas fa-pen"></i></span> Ready for approval</p>';
             if(count(Service::serviceCheck($value->invoiceid)) !== 0) {
-              $flagged = "<span class='icon has-text-warning' onclick='openModal(".$value->invoiceid.")'> <i class='fas fa-exclamation-triangle'></i></span>";
+              $flagged = "<p onclick='openModal(".$value->invoiceid.")' class='clickable'><span class='icon has-text-warning'> <i class='fas fa-exclamation-triangle'></i></span> Unapproved service!</p>";
               $approveButton = '<button class="button is-primary is-fullwidth" onclick="updateInvoice()" title="Disabled button" id="' . $value->invoiceid . '" disabled>Not all services are approved!</button>';
             } else {
               $approveButton = '<button class="button is-primary is-fullwidth" onclick="updateInvoice()" id="' . $value->invoiceid . '">Approve Invoice</button>';

@@ -3,11 +3,6 @@
 class Invoice extends Database
 {
 
-  public static function showdb() : array {
-    return (new self)->query("SHOW TABLES")->fetchAll();
-  }
-
-
     public static function fetchAllInvoices() : array {
       return (new self)->query("SELECT
                                 invoice.id AS invoiceid, invoice.company, DATE_FORMAT(invoice.date, '%D of %M - %Y') AS date, invoice.billedTo, invoice.approved AS invoiceApproved, service.id AS serviceid, service.name, service.hours, service.rate, service.approved AS serviceApproved, SUM(service.hours * service.rate) AS total
