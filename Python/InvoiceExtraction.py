@@ -47,8 +47,10 @@ def connect_db():
 def main():
     if db_connection:
         invoices = check_for_new_invoices()  # returns array of invoices
+        print(invoices)
         for invoice in invoices:
             completed, invoice_data = extract_data(invoice)
+            print(completed)
             if completed:
                 add_invoice(invoice_data)
             else:  # Due to wrong input data as connection is already established
@@ -173,7 +175,8 @@ def add_service(service, cost):
     query = "INSERT INTO estimations (item, price) VALUES (%s, %s);"
     values = (service, int(cost))
     mycursor.execute(query, values)
-    # mydb.commit()
+    mydb.commit()
+    print('Service added')
 
 
 def add_invoice(invoice):
@@ -187,11 +190,12 @@ def add_invoice(invoice):
         invoice['Invoice_ID'], invoice['Company'], invoice['Date'], invoice['Name'], invoice['Total'],
         invoice['Approved'])
     mycursor.execute(query, values)
-    # mydb.commit()
+    mydb.commit()
+    print('Invoice added')
 
     for s in invoice['Service(s)']:
         query = "INSERT INTO service (name, hours, rate, approved) VALUES (%s, %s, %s, %s);"
         values = (s['Description'], s['Hours'], s['Cost'], s['Approved'])
         mycursor.execute(query, values)
-        # mydb.commit()
-    print('Invoice added')
+        mydb.commit()
+    print('Services added')
