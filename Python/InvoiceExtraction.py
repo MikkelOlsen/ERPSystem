@@ -126,7 +126,7 @@ def extract_data(invoice):
                 approved = 0
                 add_service(service, 999999)  # adding service to estimations with cost --> inf if false
             services_data.append({'Description': service, 'Hours': hours, 'Cost': cost, 'Approved': approved})
-            invoice_data['Approved'] = approved
+            invoice_data['Approved'] = approved.__int__()
 
     for v in invoice_data.values():
         v = v.__str__()
