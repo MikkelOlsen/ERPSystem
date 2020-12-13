@@ -25,7 +25,7 @@ def init():
 
 def error_handling(error):
     print(error)
-    print('Waiting for reestablishing ...')
+    print('Waiting for reestablishing ..')
     time.sleep(15)
     main()
 
