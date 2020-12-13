@@ -1,6 +1,7 @@
 import os
 import shutil
 from configparser import ConfigParser
+from datetime import date
 
 import mysql.connector
 import pdfplumber
@@ -192,7 +193,7 @@ def add_invoice(invoice):
     """
     query = "INSERT INTO invoice (invoiceID, company, date, billedTo, approved) VALUES (%s, %s, %s, %s, %s);"
     values = (
-        invoice['Invoice_ID'], invoice['Company'], invoice['Date'], invoice['Name'],
+        invoice['Invoice_ID'], invoice['Company'], date(invoice['Date']), invoice['Name'],
         invoice['Approved'])
     mycursor.execute(query, values)
     mydb.commit()
