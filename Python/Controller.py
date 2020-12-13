@@ -36,11 +36,12 @@ def error_handling(error):
 
 def main():
     global running_error_handling
+    running_error_handling = False
     try:
         init()
         while not running_error_handling:
             run()
-            time.sleep(5)
+            time.sleep(40)
     except imaplib.IMAP4_SSL.error as e:
         error_handling(e)
     except mysql.connector.errors.InterfaceError as e:
