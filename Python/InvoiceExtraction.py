@@ -120,10 +120,10 @@ def extract_data(invoice):
             cost = row.split()[-2]
             hours = row.split()[2]
             if estimation_check(service, cost):
-                approved = True
+                approved = 1
                 add_service(service, cost)
             else:
-                approved = False
+                approved = 0
                 add_service(service, 999999)  # adding service to estimations with cost --> inf if false
             services_data.append({'Description': service, 'Hours': hours, 'Cost': cost, 'Approved': approved})
             invoice_data['Approved'] = approved
@@ -194,7 +194,7 @@ def add_invoice(invoice):
     query = "INSERT INTO invoice (invoiceID, company, date, billedTo, approved) VALUES (%s, %s, %s, %s, %s);"
     values = (
         int(invoice['Invoice_ID']), invoice['Company'], int(date(invoice['Date'])), invoice['Name'],
-        invoice['Approved'])
+        int(invoice['Approved']))
     mycursor.execute(query, values)
     mydb.commit()
     print('Invoice added')
@@ -203,7 +203,7 @@ def add_invoice(invoice):
 
     for s in invoice['Service(s)']:
         query = "INSERT INTO service (invoiceId, name, hours, rate, approved) VALUES (%s, %s, %s, %s);"
-        values = (invoice_db_id, s['Description'], s['Hours'], s['Cost'], s['Approved'])
+        values = (invoice_db_id, s['Description'], s['Hours'], s['Cost'], int(s['Approved']))
         mycursor.execute(query, values)
         mydb.commit()
     print('Services added')
