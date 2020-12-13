@@ -134,14 +134,6 @@ def extract_data(invoice):
 
     return extraction_completed, invoice_data  # returning tuple
 
-    """
-    if extraction_completed:
-        print('Data extracted')
-        return invoice_data
-    else:
-        return False
-    """
-
 
 def estimation_check(item, cost):
     """
