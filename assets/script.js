@@ -21,7 +21,7 @@ function updateServices() {
     postData.forEach(element => {
         $.ajax({
             method: 'POST',
-            url: $('#baseurl').text() + 'Api/Services',
+            url: $('#baseurl').text() + 'ServicesAPI',
             data: {
                 id: element[0],
                 name: element[1],
@@ -40,13 +40,13 @@ function updateServices() {
     });
 
     
-    //location.reload();
+    location.reload();
 }
 
 function updateInvoice() {
         $.ajax({
             method: 'POST',
-            url: $('#baseurl').text() + 'Api/Invoice',
+            url: $('#baseurl').text() + 'InvoiceAPI',
             data: {
                 id: event.target.id
             },
@@ -61,5 +61,5 @@ function updateInvoice() {
         
 
     
-    //location.reload();
+    location.reload();
 }
