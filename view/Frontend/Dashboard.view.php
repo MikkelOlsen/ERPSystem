@@ -104,4 +104,6 @@
 ?>
 </div>
 </div>
-<p>Test V999</p>
+<pre>
+    <?= var_dump(Invoice::fetchAllInvoices()) ?>
+</pre>
