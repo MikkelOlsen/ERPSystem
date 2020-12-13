@@ -146,7 +146,7 @@ def estimation_check(item, cost):
     If an estimation exist and diff is smaller that 20 percent
     :return: true/false boolean
     """
-    mycursor.execute("SELECT * FROM id15598460_erp.estimations;")
+    mycursor.execute("SELECT * FROM estimations;")
     for row in mycursor:
         if item == row[0]:
             estimation = row[1]
