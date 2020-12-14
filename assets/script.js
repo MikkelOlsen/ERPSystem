@@ -9,6 +9,7 @@ function closeModal(id) {
 function updateServices() {
     var postData = []
     var id = event.target.id
+    var err = false
     $('#modalTBody-' + id + ' td').each(function() {
         var row = this.parentElement.rowIndex - 1 //Exclude the header row
         while (row >= postData.length) {
@@ -38,10 +39,8 @@ function updateServices() {
                     console.log(value)
                     $('#errorBox-' + id).append(value + '</br>')
                 }) 
-            } else {
-                location.reload();
+                err = true
             }
-            
         })
         .fail(function(data) {
             console.log("A failure occured.")
@@ -50,6 +49,9 @@ function updateServices() {
         
     });
 
+    if(err == false) {
+        location.reload()
+    }
     
     
 }
@@ -72,5 +74,5 @@ function updateInvoice() {
         
 
     
-    location.reload();
+    location.reload()
 }
