@@ -39,6 +39,7 @@ function updateServices() {
         })
         .fail(function() {
             console.log("A failure occured.")
+            console.log(data)
         });
         
     });
