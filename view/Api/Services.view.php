@@ -12,13 +12,13 @@ if(isset($POST['id'])) {
     }
 
     //Check that the hours is an integer
-    if(!Validate::intBetween(intval($POST['hours']), 1, 20) == false) {
+    if(Validate::intBetween($POST['hours'], 1, 20) == false) {
         $err++;
         $msg[$err] = '<p>Hours must be numeric.s</p>';
     }
 
     //Check that the rate is an integer
-    if(!Validate::intBetween(intval($POST['rate']), 1, 20) == false) {
+    if(Validate::intBetween($POST['rate'], 1, 20) == false) {
         $err++;
         $msg[$err] = '<p>Rate must be numeric.s</p>';
     }

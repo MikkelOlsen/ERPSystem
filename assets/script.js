@@ -17,7 +17,7 @@ function updateServices() {
     })
 
 
-    
+    $('#errorBox-' + event.target.id).html("")
     postData.forEach(element => {
         $.ajax({
             method: 'POST',
@@ -25,8 +25,8 @@ function updateServices() {
             data: {
                 id: element[0],
                 name: element[1],
-                hours: parseInt(element[2]),
-                rate: parseInt(element[3])
+                hours: element[2],
+                rate: element[3]
             },
             dataType: 'JSON'
         })
@@ -34,6 +34,7 @@ function updateServices() {
             console.log(data)
             $.each(data.msg, function(key, value) {
                 console.log(value)
+                $('#errorBox-' + event.target.id).append(value + '</br>')
             }) 
         })
         .fail(function() {
