@@ -8,6 +8,10 @@
       'view' => 'Frontend'.DS.'Dashboard.view.php'
     ],
     [
+      'path' => '/Log',
+      'view' => 'Frontend'.DS.'Log.view.php'
+    ],
+    [
       'path' => '/ServicesAPI',
       'view' => 'Api'.DS.'Services.view.php',
       'layout' => 'Api'

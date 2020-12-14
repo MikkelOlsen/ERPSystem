@@ -14,7 +14,7 @@
           System
         </p>
         <ul class="menu-list">
-          <li><a href="">Logout</a></li>
+          <li><a href="<?= Router::$BASE ?>Log">Log</a></li>
         </ul>
       </aside>
     </div>

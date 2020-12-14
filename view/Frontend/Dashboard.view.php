@@ -24,7 +24,7 @@
     <h3 class="subtitle is-3">
         Invoice overview
     </h3>
-<table class="table" id="invoiceTable">
+<table class="table myTable" id="invoiceTable">
   <thead>
     <tr>
       <th>Status</th>
