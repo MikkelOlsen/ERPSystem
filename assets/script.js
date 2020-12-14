@@ -25,8 +25,8 @@ function updateServices() {
             data: {
                 id: element[0],
                 name: element[1],
-                hours: element[2],
-                rate: element[3]
+                hours: parseInt(element[2]),
+                rate: parseInt(element[3])
             },
             dataType: 'JSON'
         })
