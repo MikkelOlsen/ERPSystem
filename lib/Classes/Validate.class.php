@@ -81,7 +81,6 @@ class Validate{
         return (
             isset($int) &&
             is_numeric($int) &&
-            
             strlen((string)$int) >= (int)$min && 
             strlen((string)$int) <= (int)$max
         ) ? true : false;

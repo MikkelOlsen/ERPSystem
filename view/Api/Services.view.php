@@ -30,7 +30,7 @@ if(isset($POST['id'])) {
      If there are errors, return the error messages.
     */
     if($err == 0) {
-        if(Service::updateService($POST['id'], $POST['name'], $POST['hours'], $POST['rate']) == true)
+        if(Service::updateService($POST['id'], $POST['name'], intval($POST['hours']), intval($POST['rate'])) == true)
         {
             echo json_encode([
                 'err' => false

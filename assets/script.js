@@ -37,7 +37,7 @@ function updateServices() {
                 $('#errorBox-' + event.target.id).append(value + '</br>')
             }) 
         })
-        .fail(function() {
+        .fail(function(data) {
             console.log("A failure occured.")
             console.log(data)
         });
