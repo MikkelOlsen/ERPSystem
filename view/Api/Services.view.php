@@ -2,17 +2,17 @@
 if(isset($POST['id'])) {
     $err = 0;
     $msg = [];
-    if(!Validate::stringBetween($POST['name'])) {
+    if(Validate::stringBetween($POST['name']) == false) {
         $err++;
         $msg[$err] = '<p>Name must not contain special characters.</p>';
     }
 
-    if(!Validate::intBetween($POST['hours'], 1, 20)) {
+    if(!Validate::intBetween($POST['hours'], 1, 20) == false) {
         $err++;
         $msg[$err] = '<p>Hours must be numeric.s</p>';
     }
 
-    if(!Validate::intBetween($POST['rate'], 1, 20)) {
+    if(!Validate::intBetween($POST['rate'], 1, 20) == false) {
         $err++;
         $msg[$err] = '<p>Rate must be numeric.s</p>';
     }
