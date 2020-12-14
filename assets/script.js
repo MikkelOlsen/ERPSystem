@@ -8,7 +8,8 @@ function closeModal(id) {
 
 function updateServices() {
     var postData = []
-    $('#modalTBody-' + event.target.id + ' td').each(function() {
+    var id = event.target.id
+    $('#modalTBody-' + id + ' td').each(function() {
         var row = this.parentElement.rowIndex - 1 //Exclude the header row
         while (row >= postData.length) {
             postData.push([])
@@ -17,7 +18,7 @@ function updateServices() {
     })
 
 
-    $('#errorBox-' + event.target.id).html("")
+    $('#errorBox-' + id).html("")
     postData.forEach(element => {
         $.ajax({
             method: 'POST',
@@ -34,7 +35,7 @@ function updateServices() {
             console.log(data)
             $.each(data.msg, function(key, value) {
                 console.log(value)
-                $('#errorBox-' + event.target.id).append(value + '</br>')
+                $('#errorBox-' + id).append(value + '</br>')
             }) 
         })
         .fail(function(data) {
