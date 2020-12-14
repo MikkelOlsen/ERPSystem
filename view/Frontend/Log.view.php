@@ -1,4 +1,4 @@
-<div class="columns">
+<div class="columns logBox">
     <div class="column">
         <div class="box">
             <nav class="level">
