@@ -71,11 +71,17 @@ class Validate{
      * @param int $max (default = 5)
      * @return bool
      */
-    public static function intBetween(int $int, int $min = 4, int $max = 5) : bool
+    public static function intBetween(str $int, int $min = 4, int $max = 5) : bool
     {
+        $int = preg_replace('/[^0-9.]+/', '', $int);
+        if(empty($int)){
+            return false;
+        }
+        $int = intval($int);
         return (
             isset($int) &&
             is_numeric($int) &&
+            
             strlen((string)$int) >= (int)$min && 
             strlen((string)$int) <= (int)$max
         ) ? true : false;
