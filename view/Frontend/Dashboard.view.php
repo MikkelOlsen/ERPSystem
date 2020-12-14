@@ -76,7 +76,7 @@
         <div class="modal-background"></div>
         <div class="modal-content">
         <div class="box">';
-        
+        echo '<div id="errorBox-'.$value->invoiceid.'"></div>';
         echo '<table class="table" id="modalTable">';
         echo '<thead>';
         echo '<tr>';
