@@ -34,6 +34,15 @@ def error_handling(error):
     main()
 
 
+"""log function
+def log(message, error):  # 1 or 0
+    query = ("INSERT INTO log message, error VALUES (%s, %s);")
+    values = (message, error)
+    mycursor.execute(query, values)
+    mydb.commit()
+"""
+
+
 def main():
     global running_error_handling
     running_error_handling = False
@@ -42,11 +51,7 @@ def main():
         while not running_error_handling:
             run()
             time.sleep(40)
-    except imaplib.IMAP4_SSL.error as e:
-        error_handling(e)
-    except mysql.connector.errors.InterfaceError as e:
-        error_handling(e)
-    except ConnectionRefusedError as e:
+    except (imaplib.IMAP4_SSL.error, mysql.connector.errors.InterfaceError, ConnectionRefusedError) as e:
         error_handling(e)
 
 
