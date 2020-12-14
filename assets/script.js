@@ -46,7 +46,7 @@ function updateServices() {
     });
 
     
-    //location.reload();
+    location.reload();
 }
 
 function updateInvoice() {
