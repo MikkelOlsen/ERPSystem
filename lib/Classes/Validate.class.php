@@ -73,8 +73,8 @@ class Validate{
      */
     public static function intBetween(string $int, int $min = 4, int $max = 5) : bool
     {
-        $int = preg_replace('/[^0-9.]+/', '', $int);
-        if(empty($int)){
+        $intTMP = preg_replace('/[^0-9.]+/', '', $int);
+        if(empty($intTMP)){
             return false;
         }
         
