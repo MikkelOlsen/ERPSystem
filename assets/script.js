@@ -32,6 +32,11 @@ function updateServices() {
         })
         .done(function(data) {
             console.log(data)
+            if(data.err == true) {
+                data.msg.forEach(element => {
+                    console.log(element)
+                });
+            }
         })
         .fail(function() {
             console.log("A failure occured.")
