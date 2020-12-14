@@ -77,7 +77,7 @@ class Validate{
         if(empty($int)){
             return false;
         }
-        $int = intval($int);
+        
         return (
             isset($int) &&
             is_numeric($int) &&
