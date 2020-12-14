@@ -31,10 +31,10 @@ function updateServices() {
             dataType: 'html'
         })
         .done(function(data) {
-            console.log("SUCCESS")
-        })
-        .fail(function(data) {
             console.log(data)
+        })
+        .fail(function() {
+            console.log("A failure occured.")
         });
         
     });
