@@ -82,3 +82,7 @@ html {
   cursor: pointer;
 }
 
+.logBox {
+  max-width: 85%;
+  margin: 0 auto;
+}
