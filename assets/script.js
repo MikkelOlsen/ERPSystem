@@ -33,14 +33,14 @@ function updateServices() {
         .done(function(data) {
             console.log("SUCCESS")
         })
-        .fail(function() {
-            console.warn("FAILED")
+        .fail(function(data) {
+            console.log(data)
         });
         
     });
 
     
-    location.reload();
+    //location.reload();
 }
 
 function updateInvoice() {
