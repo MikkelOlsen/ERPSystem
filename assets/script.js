@@ -32,6 +32,9 @@ function updateServices() {
         })
         .done(function(data) {
             console.log(data)
+            $.each(data.msg, function(key, value) {
+                console.log(value)
+            }) 
         })
         .fail(function() {
             console.log("A failure occured.")
