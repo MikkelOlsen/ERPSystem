@@ -33,10 +33,15 @@ function updateServices() {
         })
         .done(function(data) {
             console.log(data)
-            $.each(data.msg, function(key, value) {
-                console.log(value)
-                $('#errorBox-' + id).append(value + '</br>')
-            }) 
+            if(data.err == true) {
+                $.each(data.msg, function(key, value) {
+                    console.log(value)
+                    $('#errorBox-' + id).append(value + '</br>')
+                }) 
+            } else {
+                location.reload();
+            }
+            
         })
         .fail(function(data) {
             console.log("A failure occured.")
@@ -46,7 +51,7 @@ function updateServices() {
     });
 
     
-    location.reload();
+    
 }
 
 function updateInvoice() {
