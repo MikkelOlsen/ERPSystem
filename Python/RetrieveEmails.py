@@ -62,7 +62,7 @@ def read_inbox():
 
 
 def get_invoices(msg):
-    print(attachment_dir)
+    invoice_collected = False
     sender_email = msg['From']
     for part in msg.walk():  # iterates through email object
         if part.get_content_maintype() == 'multipart':
@@ -76,4 +76,5 @@ def get_invoices(msg):
             file_path = os.path.join(attachment_dir, sender_email + ' ' + uuid.uuid4().__str__() + '_' + file_name)
             with open(file_path, 'wb') as f:  # wb = wide binary
                 f.write(part.get_payload(decode=True))
-    return True
+            invoice_collected = True
+    return invoice_collected

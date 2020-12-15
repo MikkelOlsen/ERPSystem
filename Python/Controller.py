@@ -7,6 +7,8 @@ import DB_Connection as db
 
 running_error_handling = False
 
+import SendMail
+
 
 def search_mailbox():
     RetrieveEmails.read_inbox()
