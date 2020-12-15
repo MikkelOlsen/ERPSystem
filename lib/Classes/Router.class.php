@@ -113,6 +113,7 @@ class Router extends \PDO
    */
   public static function init(string $url, array $routes) : void
   {
+    echo $url . ' <---- URL';
     if(self::ValidateRoutes($routes, ['path', 'view'])){
     self::$Routes = $routes;
     $url = Filter::SanitizeURL($url);
@@ -120,8 +121,6 @@ class Router extends \PDO
     self::$REQ_ROUTE = '/'.str_replace(strtolower(self::$BASE), '', strtolower($url));
     $newPath = explode('/', rtrim(self::$REQ_ROUTE, '/'));
     $newPath = array_splice($newPath, 1, count($newPath)-1);
-    echo 'New path: ' . var_dump($newPath);
-    echo 'Req Route: ' . var_dump(self::$REQ_ROUTE);
     $routePath = [];
     $match = false;
     
@@ -137,7 +136,6 @@ class Router extends \PDO
           $path .= '/'.$newPath[$pCnt];
         }
       }
-      echo 'Path: ' . var_dump($path);
       
       if(strtolower($route['path']) === strtolower($path)) {
         $routeExplode = explode('/', $route['path']);
@@ -151,9 +149,6 @@ class Router extends \PDO
     for($x = 0; $x < sizeof($counter); $x++) {
       $routingPath .= '/'.$counter[$x];
     }
-
-    echo 'Counter: ' . var_dump($counter);
-    echo 'Routing Path: ' . var_dump($routingPath);
 
     foreach(self::$Routes as $routeIndex => $singleRoute) {
       if(strtolower($routingPath) === strtolower($singleRoute['path'])) {
@@ -224,11 +219,8 @@ class Router extends \PDO
  * @param string $activeCLass
  * @return string
  */
-public static function IsActive(string $route, string $activeCLass) : string
-{
-    return strtolower($route) === strtolower(self::$currentRoute) ? $activeCLass : '';
-} 
-
+];
+    } 
+  }
 }
 
-?>
