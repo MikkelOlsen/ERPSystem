@@ -35,26 +35,25 @@ function updateServices() {
             dataType: 'JSON'
         })
         .done(function(data) {
-            console.log(data)
             if(data.err == true) {
                 $.each(data.msg, function(key, value) {
-                    console.log(value)
                     $('#errorBox-' + id).append(value + '</br>')
                 }) 
                 err = true
             }
+            if(count == i) {
+                if(err == false) {
+                    location.reload()
+                }
+            }
+            count++
         })
         .fail(function(data) {
             console.log("A failure occured.")
             console.log(data)
         });
-        count++;
 
-        if(count == entries) {
-            if(err == false) {
-                location.reload()
-            }
-        }
+        
     }
     
     
