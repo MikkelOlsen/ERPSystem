@@ -5,6 +5,7 @@ import uuid
 from configparser import ConfigParser
 
 import SendMail
+import DB_Connection as db
 
 mail = None
 attachment_dir = None
@@ -23,7 +24,7 @@ def init():
     port = config['Gmail']['port']
     while not mail:
         mail = connection(user, password, host, port)  # calling function for establishing connection
-    print('Mail connection established')
+    db.log('Mail connection established')
 
 
 def connection(address, password, host, port):
@@ -31,7 +32,7 @@ def connection(address, password, host, port):
     Connects to Outlook
     :returns: mail connection
     """
-    print('Connecting to ' + host + "...")
+    db.log('Connecting to ' + host + "...")
     mail = imaplib.IMAP4_SSL(host, port)  # port for connecting
     mail.login(address, password)
     return mail
@@ -44,7 +45,7 @@ def read_inbox():
     _, data = mail.search(None, '(UNSEEN)')  # search for unread emails
     inbox_item_list = data[0].split()  # list of references to emails
     if not inbox_item_list:
-        print('No unread emails')
+        print('No unread emails')  # not logging due to memory
     else:
         for item in inbox_item_list:
             # Returned data are tuples of message part envelope and data
@@ -53,7 +54,7 @@ def read_inbox():
             string_email = email_data[0][1].decode("utf-8")  # extracting
             email_message = email.message_from_string(string_email)  # converting to object
             if get_invoices(email_message):
-                print('Invoice collected')
+                db.log('Invoice Collected')
             else:
                 sender_email = email_message['From']
                 SendMail.send_email(sender_email)  # sends default mail
@@ -72,8 +73,7 @@ def get_invoices(msg):
         if not file_name.endswith('.pdf'):
             continue
         if bool(file_name):
-            file_path = os.path.join(attachment_dir, sender_email + uuid.uuid4().__str__()+'_' + file_name)
-            print(file_path)
+            file_path = os.path.join(attachment_dir, sender_email + ' ' + uuid.uuid4().__str__() + '_' + file_name)
             with open(file_path, 'wb') as f:  # wb = wide binary
                 f.write(part.get_payload(decode=True))
     return True
