@@ -104,6 +104,3 @@
 ?>
 </div>
 </div>
-<pre>
-    <?= var_dump(Invoice::fetchAllInvoices()) ?>
-</pre>
