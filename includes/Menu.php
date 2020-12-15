@@ -8,13 +8,13 @@
           General
         </p>
         <ul class="menu-list">
-          <li><a href="<?= Router::$BASE ?>Dashboard">Dashboard</a></li>
+          <li><a class="<?= Router::IsActive('/Dashboard', 'active-menu') ?>" href="<?= Router::$BASE ?>Dashboard">Dashboard</a></li>
         </ul>
         <p class="menu-label">
           System
         </p>
         <ul class="menu-list">
-          <li><a href="<?= Router::$BASE ?>Log">Log</a></li>
+          <li><a class="<?= Router::IsActive('/Log', 'active-menu') ?>" href="<?= Router::$BASE ?>Log">Log</a></li>
         </ul>
       </aside>
     </div>
