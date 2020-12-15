@@ -106,6 +106,13 @@ class Router extends \PDO
    * This is the method that handles all rewrited URL data along with all initialization of URL handling.
    * It finds the required URL by removing the root from the complete URL entered in the browser.
    * the required URL is split into an array by "/" as a seperator
+   * It will then check every routing option from the routing config file, the path from here is split by "/" as well.
+   * It counts how many indexes there are in the array made from routing config, then builds a new string from the required URl array
+   * This string is matched against the path of the current index from the routing array.
+   * When a match is found it will process to setup what view file must be used and if there are any paramteres.
+   * If there are more than 1 match, the more exact match will always be used.
+   * 
+   * 
    *
    * @param string $url
    * @param array $routes
@@ -113,17 +120,11 @@ class Router extends \PDO
    */
   public static function init(string $url, array $routes) : void
   {
-    echo 'URL ----> ' . $url . '</br>';
     if(self::ValidateRoutes($routes, ['path', 'view'])){
     self::$Routes = $routes;
     $url = Filter::SanitizeURL($url);
-    echo 'URL ----> ' . $url . '</br>';
-    self::$BASE = substr($_SERVER['SERVER_NAME'], 0, strpos($_SERVER['SERVER_NAME'], 'index.php'));
-    echo 'URL ----> ' . self::$BASE . '</br>';
-    echo 'URL ----> ' . $_SERVER['SERVER_NAME'] . '</br>';
-    echo 'URL ----> <pre>' . var_dump($_SERVER) . '</pre></br>';
+    self::$BASE = substr($_SERVER['PHP_SELF'], 0, strpos($_SERVER['PHP_SELF'], 'index.php'));
     self::$REQ_ROUTE = '/'.str_replace(strtolower(self::$BASE), '', strtolower($url));
-    echo 'URL ----> ' . self::$REQ_ROUTE . '</br>';
     $newPath = explode('/', rtrim(self::$REQ_ROUTE, '/'));
     $newPath = array_splice($newPath, 1, count($newPath)-1);
     $routePath = [];
@@ -142,12 +143,11 @@ class Router extends \PDO
         }
       }
 
+
       
       if(strtolower($route['path']) === strtolower($path)) {
         $routeExplode = explode('/', $route['path']);
         $routePath[] = array_splice($routeExplode, 1, count($routeExplode)-1);
-
-   
 
     $counter = max($routePath);
     $routingPath = NULL;
@@ -156,12 +156,15 @@ class Router extends \PDO
       $routingPath .= '/'.$counter[$x];
     }
 
+
+
     foreach(self::$Routes as $routeIndex => $singleRoute) {
       if(strtolower($routingPath) === strtolower($singleRoute['path'])) {
         self::$RouteIndex = $routeIndex;
         $match = true;
         $URLparams = array_slice($newPath, $x, count($newPath));
         self::$View = self::$ViewFolder . DS . $singleRoute['view'];
+
 
         if(array_key_exists('layout', $singleRoute) && !empty($singleRoute['layout'])) 
         {
@@ -189,6 +192,7 @@ class Router extends \PDO
     }
   }
 }
+
 
     if($match == false)  
     {
@@ -218,6 +222,13 @@ class Router extends \PDO
   }
 }
 
+/**
+ * Checks if the url in the parameter is the current URL.
+ *
+ * @param string $route
+ * @param string $activeCLass
+ * @return string
+ */
 public static function IsActive(string $route, string $activeCLass) : string
 {
     return strtolower($route) === strtolower(self::$currentRoute) ? $activeCLass : '';

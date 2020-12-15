@@ -1,4 +1,6 @@
 <?php
+
+    // Environmental setup for the page and defining global variables.
     setlocale(LC_ALL, array('da_DA.UTF-8','da_DA@euro','da_DA','danish'));
 
     ini_set('display_errors', 1);
@@ -10,8 +12,10 @@
     define('DS', DIRECTORY_SEPARATOR);
     define('_CLASSES_', __DIR__.'/lib/Classes');
 
+    //Start a PHP Session
     session_start();
 
+    // Loop through all class files in lib > Classes and require them, making them useable across the entire project.
     spl_autoload_register(function ($className) {
         $className = str_replace('\\', '/', $className);
         if (file_exists(__DIR__ . DS  . 'lib' . DS . 'Classes' . DS . $className . '.class.php')) {
@@ -21,9 +25,11 @@
         }
     });
 
+    // Sanatize both POST and GET for security.
     $GET  = Filter::CheckMethod('GET')  ? Filter::SanitizeArray(INPUT_GET)  : null;
     $POST = Filter::CheckMethod('POST') ? Filter::SanitizeArray(INPUT_POST) : null;
 
+    //Loop through config files in config folder and require them.
     foreach (Config::LocateFiles(__ROOT__ . DS . 'config' . DS) as $configFile) {
         require_once $configFile;
     }
