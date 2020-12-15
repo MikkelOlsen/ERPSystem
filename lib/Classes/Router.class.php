@@ -121,7 +121,7 @@ class Router extends \PDO
     self::$BASE = substr($_SERVER['PHP_SELF'], 0, strpos($_SERVER['PHP_SELF'], 'index.php'));
     echo 'URL ----> ' . self::$BASE . '</br>';
     echo 'URL ----> ' . $_SERVER['PHP_SELF'] . '</br>';
-    echo 'URL ----> ' . $_SERVER['REMOTE_ADDR'] . '</br>';
+    echo 'URL ----> <pre>' . var_dump($_SERVER) . '</pre></br>';
     self::$REQ_ROUTE = '/'.str_replace(strtolower(self::$BASE), '', strtolower($url));
     echo 'URL ----> ' . self::$REQ_ROUTE . '</br>';
     $newPath = explode('/', rtrim(self::$REQ_ROUTE, '/'));
