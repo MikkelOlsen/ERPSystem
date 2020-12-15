@@ -43,7 +43,7 @@ def main():
         init()
         while not running_error_handling:
             run()
-            time.sleep(5)
+            time.sleep(40)
     except (imaplib.IMAP4_SSL.error, mysql.connector.errors.InterfaceError, ConnectionRefusedError) as e:
         error_handling(e)
 
