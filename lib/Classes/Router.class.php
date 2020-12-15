@@ -113,7 +113,7 @@ class Router extends \PDO
    */
   public static function init(string $url, array $routes) : void
   {
-    echo $url . ' <---- URL';
+    echo 'URL ----> ' . $url;
     if(self::ValidateRoutes($routes, ['path', 'view'])){
     self::$Routes = $routes;
     $url = Filter::SanitizeURL($url);
@@ -136,6 +136,7 @@ class Router extends \PDO
           $path .= '/'.$newPath[$pCnt];
         }
       }
+
       
       if(strtolower($route['path']) === strtolower($path)) {
         $routeExplode = explode('/', $route['path']);
@@ -212,15 +213,9 @@ class Router extends \PDO
   }
 }
 
-/**
- * Undocumented function
- *
- * @param string $route
- * @param string $activeCLass
- * @return string
- */
-];
-    } 
-  }
+public static function IsActive(string $route, string $activeCLass) : string
+{
+    return strtolower($route) === strtolower(self::$currentRoute) ? $activeCLass : '';
+} 
 }
 
