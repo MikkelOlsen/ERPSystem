@@ -2,11 +2,15 @@
 
 class Database extends \PDO
 {
-
+    
     protected $conn;
     private $connected = false;
     private $query = null;
 
+    /**
+     * Create a new PDO MySQL DB connection.
+     * Information about DB is received from global constants in database config.
+     */
     public function __construct()
     {
         try
@@ -26,6 +30,14 @@ class Database extends \PDO
             exit;
         }
     }
+
+    /**
+     * Execute my MySQL query with parameters if any are send as a prameter.
+     *
+     * @param [type] $query
+     * @param boolean $params
+     * @return void
+     */
     public function query($query, $params = false)
     {
         $this->query = $this->conn->prepare($query);
@@ -39,15 +51,23 @@ class Database extends \PDO
         }
         return $this->query;
     }
+
+    /**
+     * Return true / false based on successfull connection to DB
+     *
+     * @return void
+     */
     public function checkConnection()
     {
         return $this->connected;
     }
+
+    /**
+     * Terminate/Close the current DB connection
+     *
+     * @return void
+     */
     public function close()
-    {
-        unset($this->conn, $this->query);
-    }
-    public function __deconstruct()
     {
         unset($this->conn, $this->query);
     }
