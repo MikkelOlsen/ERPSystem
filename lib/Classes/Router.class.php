@@ -19,6 +19,14 @@ class Router extends \PDO
                       $errorPagePath = null,
                       $currentRoute  = null;  
 
+  /**
+   * Validate that given keys all exists in the array
+   * Method is called on L. 151 - Here we check all routes from Router config contains a path and a view key.
+   *
+   * @param array $routes
+   * @param array $keys
+   * @return boolean
+   */
   public static function ValidateRoutes(array $routes, array $keys) : bool
   {
       $errors = 0;
@@ -32,49 +40,70 @@ class Router extends \PDO
       return ( $errors === 0 );
   }
 
+  /**
+   * Override class private variable ViewFolder
+   *
+   * @param string $viewfolder
+   * @return void
+   */
   public static function SetViewFoler(string $viewfolder) : void
     {
         self::$ViewFolder = $viewfolder;
     }
+
+    /**
+     * Return class private variable ViewFolder
+     *
+     * @return string
+     */
     public static function GetViewFolder() : string
     {
         return self::$ViewFolder;
     }
+
+    /**
+     * Override class private variable DefaultRoute
+     *
+     * @param string $route
+     * @return void
+     */
     public static function SetDefaultRoute(string $route) : void
     {
         self::$DefaultRoute = $route;
     }
+
+    /**
+     * Override class private variable Layout
+     *
+     * @param string $layout
+     * @return void
+     */
     public static function SetDefaultLayout(string $layout) : void
     {
         self::$Layout = $layout;
     }
+
+    /**
+     * Override class private variable errorPagePath
+     *
+     * @param string $path
+     * @return void
+     */
     public static function SetErrorPath(string $path) : void
     {
         self::$errorPagePath = $path;
     }
 
-  public static function GetParamByName(string $param) : string
-  {
-    return rawurldecode(self::$Params[$param]) ?? null;
-  }
 
-  public static function GetParamByIndex(int $index) : string
-  {
-    return rawurldecode(self::$Params[$index]) ?? null;
-  }
-
-  public static function GetParams() : array
-  {
-    return self::$Params ?? [];
-  }
-
-  public static function Redirect(string $location) : void
-  {
-      ob_start();
-      header('Location:' . rtrim(self::$BASE, '/') . $location);
-      exit;
-  }
-
+   /**
+   * This is the method that handles all rewrited URL data along with all initialization of URL handling.
+   * It finds the required URL by removing the root from the complete URL entered in the browser.
+   * the required URL is split into an array by "/" as a seperator
+   *
+   * @param string $url
+   * @param array $routes
+   * @return void
+   */
   public static function init(string $url, array $routes) : void
   {
     if(self::ValidateRoutes($routes, ['path', 'view'])){
@@ -84,6 +113,8 @@ class Router extends \PDO
     self::$REQ_ROUTE = '/'.str_replace(strtolower(self::$BASE), '', strtolower($url));
     $newPath = explode('/', rtrim(self::$REQ_ROUTE, '/'));
     $newPath = array_splice($newPath, 1, count($newPath)-1);
+    echo 'New path: ' . var_dump($newPath);
+    echo 'Req Route: ' . var_dump(self::$REQ_ROUTE);
     $routePath = [];
     $match = false;
     
@@ -99,6 +130,7 @@ class Router extends \PDO
           $path .= '/'.$newPath[$pCnt];
         }
       }
+      echo 'Path: ' . var_dump($path);
       
       if(strtolower($route['path']) === strtolower($path)) {
         $routeExplode = explode('/', $route['path']);
@@ -113,12 +145,16 @@ class Router extends \PDO
       $routingPath .= '/'.$counter[$x];
     }
 
+    echo 'Counter: ' . var_dump($counter);
+    echo 'Routing Path: ' . var_dump($routingPath);
+
     foreach(self::$Routes as $routeIndex => $singleRoute) {
       if(strtolower($routingPath) === strtolower($singleRoute['path'])) {
         self::$RouteIndex = $routeIndex;
         $match = true;
         $URLparams = array_slice($newPath, $x, count($newPath));
         self::$View = self::$ViewFolder . DS . $singleRoute['view'];
+
         if(array_key_exists('layout', $singleRoute) && !empty($singleRoute['layout'])) 
         {
           self::$Layout = $singleRoute['layout'];
@@ -174,6 +210,13 @@ class Router extends \PDO
   }
 }
 
+/**
+ * Undocumented function
+ *
+ * @param string $route
+ * @param string $activeCLass
+ * @return string
+ */
 public static function IsActive(string $route, string $activeCLass) : string
 {
     return strtolower($route) === strtolower(self::$currentRoute) ? $activeCLass : '';
