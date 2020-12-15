@@ -119,6 +119,8 @@ class Router extends \PDO
     $url = Filter::SanitizeURL($url);
     echo 'URL ----> ' . $url . '</br>';
     self::$BASE = substr($_SERVER['PHP_SELF'], 0, strpos($_SERVER['PHP_SELF'], 'index.php'));
+    echo 'URL ----> ' . self::$BASE . '</br>';
+    echo 'URL ----> ' . $_SERVER['PHP_SELF'] . '</br>';
     self::$REQ_ROUTE = '/'.str_replace(strtolower(self::$BASE), '', strtolower($url));
     echo 'URL ----> ' . self::$REQ_ROUTE . '</br>';
     $newPath = explode('/', rtrim(self::$REQ_ROUTE, '/'));
