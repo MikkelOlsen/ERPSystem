@@ -26,15 +26,15 @@ def init():
 def main():
     invoices = check_for_new_invoices()  # returns array of invoices
     if invoices:
-        print(invoices)
         for invoice in invoices:
             completed, invoice_data = extract_data(invoice)
             db.log('Extraction Completed: ' + completed)
             if completed:
                 add_invoice(invoice_data)
-            else:  # Due to wrong input data as connection is already established
+            else:  # Due to wrong input data
                 db.log('Extraction failure')
-                from_address = invoice.split()[-2].replace('<', '').replace('>', '')  # as from address is stored in file name
+                # as from address is stored in file name
+                from_address = invoice.split()[-2].replace('<', '').replace('>', '')
                 # Informing sender
                 SendMail.send_email(from_address)  # logging in module
         update(invoices)
@@ -101,7 +101,7 @@ def extract_data(invoice):
             else:
                 add_service(service, 999999)  # adding service to estimations with cost --> inf if false
                 invoice_approval = False  # boolean True from beginning. If it ever gets False the value is changed
-    services_data.append({'Description': service, 'Hours': hours, 'Cost': cost, 'Approved': validated})
+            services_data.append({'Description': service, 'Hours': hours, 'Cost': cost, 'Approved': validated})
     invoice_data['Approved'] = invoice_approval
 
     for v in invoice_data.values():
@@ -126,7 +126,7 @@ def estimation_check(item, cost):
     for row in db.mycursor:
         if item == row[0]:
             estimation = row[1]
-            diff = get_change(float(cost), float(estimation))
+            diff = get_change(float(cost), float(estimation))  # type cast
             if diff <= 20:
                 validated = True
             else:
