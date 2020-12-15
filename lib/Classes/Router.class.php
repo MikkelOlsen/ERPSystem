@@ -113,12 +113,14 @@ class Router extends \PDO
    */
   public static function init(string $url, array $routes) : void
   {
-    echo 'URL ----> ' . $url;
+    echo 'URL ----> ' . $url . '</br>';
     if(self::ValidateRoutes($routes, ['path', 'view'])){
     self::$Routes = $routes;
     $url = Filter::SanitizeURL($url);
+    echo 'URL ----> ' . $url . '</br>';
     self::$BASE = substr($_SERVER['PHP_SELF'], 0, strpos($_SERVER['PHP_SELF'], 'index.php'));
     self::$REQ_ROUTE = '/'.str_replace(strtolower(self::$BASE), '', strtolower($url));
+    echo 'URL ----> ' . self::$REQ_ROUTE . '</br>';
     $newPath = explode('/', rtrim(self::$REQ_ROUTE, '/'));
     $newPath = array_splice($newPath, 1, count($newPath)-1);
     $routePath = [];
