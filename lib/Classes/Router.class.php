@@ -94,6 +94,13 @@ class Router extends \PDO
         self::$errorPagePath = $path;
     }
 
+    public static function Redirect(string $location) : void
+    {
+        ob_start();
+        header('Location:' . rtrim(self::$BASE, '/') . $location);
+        exit;
+    }
+
 
    /**
    * This is the method that handles all rewrited URL data along with all initialization of URL handling.
