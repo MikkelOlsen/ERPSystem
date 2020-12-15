@@ -3,6 +3,7 @@ from configparser import ConfigParser
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import DB_Connection as db
 
 
 def send_email(to_address):
@@ -52,6 +53,6 @@ def send_email(to_address):
             server.login(user, password)
             server.sendmail(user, to_address, msg.as_string())
             server.close()
-            print('Email sent!')
+            db.log('Email sent')
     except:
-        print('Something went wrong...')
+        db.log('Something went wrong while sending')

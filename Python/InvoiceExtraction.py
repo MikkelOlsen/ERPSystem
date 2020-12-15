@@ -1,23 +1,19 @@
 import os
 import shutil
 from configparser import ConfigParser
-from datetime import date
-
-import mysql.connector
+import DB_Connection as db
 import pdfplumber
 
 import SendMail
+import DB_Connection as db
 
 new_invoices_dir = None
 treated_invoices_dir = None
-db_connection, mydb, mycursor = False, None, None
-config = None
 
 
 def init():
     global new_invoices_dir
     global treated_invoices_dir
-    global config
     """ Configuration 
     Reading information from config.ini in order to hide information
     as .gitignore contains "/config.ini"""
@@ -25,44 +21,22 @@ def init():
     config.read('config.ini')
     new_invoices_dir = config['Directories']['new_invoices_dir']
     treated_invoices_dir = config['Directories']['treated_invoices_dir']
-    connect_db()
-
-
-def connect_db():
-    global db_connection
-    global mydb
-    global mycursor
-    print('Connecting database...')
-    mydb = mysql.connector.connect(
-        host=config['Database']['host'],
-        user=config['Database']['user'],
-        password=config['Database']['password'],
-        database=config['Database']['database'],
-        auth_plugin='mysql_native_password'
-    )
-    if mydb:
-        print('Database Connection Established.')
-        mycursor = mydb.cursor(buffered=True)  # for executing commands evt. buffered=True
-    db_connection = True
 
 
 def main():
-    print('Main')
-    if db_connection:
-        print('db_connected')
-        invoices = check_for_new_invoices()  # returns array of invoices
+    invoices = check_for_new_invoices()  # returns array of invoices
+    if invoices:
         print(invoices)
         for invoice in invoices:
             completed, invoice_data = extract_data(invoice)
-            print(completed)
+            db.log('Extraction Completed: ' + completed)
             if completed:
                 add_invoice(invoice_data)
             else:  # Due to wrong input data as connection is already established
-                print('Extraction Failure')
-                from_address = invoice.split()[-2].replace('<', '').replace('>',
-                                                                            '')  # as from address is stored in file name
+                db.log('Extraction failure')
+                from_address = invoice.split()[-2].replace('<', '').replace('>', '')  # as from address is stored in file name
                 # Informing sender
-                SendMail.send_email(from_address)
+                SendMail.send_email(from_address)  # logging in module
         update(invoices)
 
 
@@ -87,7 +61,8 @@ def update(invoices):
     invoices.clear()
     file_names = os.listdir(new_invoices_dir)
     for file_name in file_names:
-        shutil.move(os.path.join(new_invoices_dir, file_name), treated_invoices_dir)
+        # overwrites if exist as we have UIDs
+        shutil.move(os.path.join(new_invoices_dir, file_name), os.path.join(treated_invoices_dir, file_name))
 
 
 def extract_data(invoice):
@@ -97,6 +72,7 @@ def extract_data(invoice):
     """
     invoice_data = {}  # creating dictionary for invoice data
     services_data = []
+    invoice_approval = True
 
     with pdfplumber.open(invoice) as pdf:
         page = pdf.pages[0]
@@ -119,14 +95,14 @@ def extract_data(invoice):
             service = row.split()[1].upper()
             cost = row.split()[-2]
             hours = row.split()[2]
-            if estimation_check(service, cost):
-                approved = 1
+            validated = estimation_check(service, cost)
+            if validated:
                 add_service(service, cost)
             else:
-                approved = 0
                 add_service(service, 999999)  # adding service to estimations with cost --> inf if false
-            services_data.append({'Description': service, 'Hours': hours, 'Cost': cost, 'Approved': approved})
-            invoice_data['Approved'] = approved
+                invoice_approval = False  # boolean True from beginning. If it ever gets False the value is changed
+    services_data.append({'Description': service, 'Hours': hours, 'Cost': cost, 'Approved': validated})
+    invoice_data['Approved'] = invoice_approval
 
     for v in invoice_data.values():
         v = v.__str__()
@@ -134,10 +110,8 @@ def extract_data(invoice):
             extraction_completed = False
         else:
             extraction_completed = True
-
     # pushing array into dictionary to access data of every service (e.g. (l: 140+))
     invoice_data['Service(s)'] = services_data
-
     return extraction_completed, invoice_data  # returning tuple
 
 
@@ -147,17 +121,17 @@ def estimation_check(item, cost):
     If an estimation exist and diff is smaller that 20 percent
     :return: true/false boolean
     """
-    approved = False
-    mycursor.execute("SELECT * FROM estimations;")
-    for row in mycursor:
+    validated = False
+    db.mycursor.execute("SELECT * FROM estimations;")
+    for row in db.mycursor:
         if item == row[0]:
             estimation = row[1]
             diff = get_change(float(cost), float(estimation))
             if diff <= 20:
-                approved = True
+                validated = True
             else:
-                approved = False
-    return approved
+                validated = False
+    return validated
 
 
 def get_change(current, previous):
@@ -180,8 +154,8 @@ def add_service(service, cost):
     :param service: item """
     query = "INSERT INTO estimations (item, price) VALUES (%s, %s);"
     values = (service, int(cost))
-    mycursor.execute(query, values)
-    mydb.commit()
+    db.mycursor.execute(query, values)
+    db.mydb.commit()
     print('Estimation added')
 
 
@@ -193,13 +167,13 @@ def add_invoice(invoice):
     """
     query = "INSERT INTO invoice (invoiceID, company, date, billedTo, approved) VALUES (%s, %s, %s, %s, %s);"
     values = (invoice['Invoice_ID'], invoice['Company'], invoice['Date'], invoice['Name'], invoice['Approved'])
-    mycursor.execute(query, values)
-    mydb.commit()
+    db.mycursor.execute(query, values)
+    db.mydb.commit()
     print('Invoice added')
 
     for s in invoice['Service(s)']:
         query = "INSERT INTO service (invoiceId, name, hours, rate, approved) VALUES ((SELECT MAX(id) FROM invoice), %s, %s, %s, %s);"
         values = (s['Description'], s['Hours'], s['Cost'], int(s['Approved']))
-        mycursor.execute(query, values)
-        mydb.commit()
+        db.mycursor.execute(query, values)
+        db.mydb.commit()
         print('Services added')
