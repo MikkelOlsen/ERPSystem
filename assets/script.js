@@ -20,7 +20,9 @@ function updateServices() {
 
 
     $('#errorBox-' + id).html("")
-    postData.forEach(element => {
+    var count = 0;
+
+    for(const [i, element] of postData.entries()) {
         $.ajax({
             method: 'POST',
             url: $('#baseurl').text() + 'ServicesAPI',
@@ -46,11 +48,13 @@ function updateServices() {
             console.log("A failure occured.")
             console.log(data)
         });
-        
-    });
+        count++;
 
-    if(err == false) {
-        location.reload()
+        if(count == entries) {
+            if(err == false) {
+                location.reload()
+            }
+        }
     }
     
     
