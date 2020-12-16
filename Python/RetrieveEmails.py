@@ -3,10 +3,10 @@ import imaplib
 import os
 import uuid
 from configparser import ConfigParser
-
 import SendMail
 import DB_Connection as db
 
+# Global variables
 mail = None
 attachment_dir = None
 

@@ -54,11 +54,12 @@ def send_email(to_address):
     msgAttachment.add_header('Content-Disposition', 'attachment', filename='invoice_template.xlsx')
     msg.attach(msgAttachment)
 
+    # Using smtplib as client for sending emails from smtp-server
     try:
         with smtplib.SMTP_SSL(host, port) as server:
-            server.ehlo()
+            server.ehlo()  # enhanced esmtp
             server.login(user, password)
-            server.sendmail(user, to_address, msg.as_string())
+            server.sendmail(user, to_address, msg.as_string())  # sending message root
             server.close()
             db.log('Email sent')
     except:

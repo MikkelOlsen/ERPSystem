@@ -7,8 +7,6 @@ import DB_Connection as db
 
 running_error_handling = False
 
-import SendMail
-
 
 def search_mailbox():
     RetrieveEmails.read_inbox()
@@ -34,7 +32,7 @@ def error_handling(error):
     running_error_handling = True
     db.log(error, 1)
     print('Waiting for reestablishing ..')
-    time.sleep(15)
+    time.sleep(120)
     main()
 
 
@@ -45,7 +43,7 @@ def main():
         init()
         while not running_error_handling:
             run()
-            time.sleep(40)
+            time.sleep(60)
     except (imaplib.IMAP4_SSL.error, mysql.connector.errors.InterfaceError, ConnectionRefusedError) as e:
         error_handling(e)
 

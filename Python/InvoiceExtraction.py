@@ -1,12 +1,11 @@
 import os
 import shutil
 from configparser import ConfigParser
-import DB_Connection as db
 import pdfplumber
-
 import SendMail
 import DB_Connection as db
 
+# Global variables
 new_invoices_dir = None
 treated_invoices_dir = None
 
@@ -28,7 +27,7 @@ def main():
     if invoices:
         for invoice in invoices:
             completed, invoice_data = extract_data(invoice)
-            db.log('Extraction Completed: ' + completed)
+            db.log('Extraction Completed: ' + completed.__str__())
             if completed:
                 add_invoice(invoice_data)
             else:  # Due to wrong input data
@@ -149,7 +148,7 @@ def get_change(current, previous):
 
 
 def add_service(service, cost):
-    """ Adding service to estimations section in db with price --> INF
+    """ Adding service to estimations section in db
     :param cost:
     :param service: item """
     query = "INSERT INTO estimations (item, price) VALUES (%s, %s);"
