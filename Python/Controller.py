@@ -31,7 +31,7 @@ def error_handling(error):
     global running_error_handling
     running_error_handling = True
     db.log(error, 1)
-    print('Waiting for reestablishing ..')
+    db.log('Waiting for reestablishing ..')
     time.sleep(120)
     main()
 
