@@ -24,4 +24,17 @@ class Log extends Database
                               WHERE error = 1")->fetchAll();
 }
 
+public static function insertLog(string $message, int $error) : bool {
+  try {
+    (new self)->query("INSERT INTO log (message, error) VALUES (:MSG, :ERR)", [
+      ':MSG' => $message,
+      ':ERR' => $error
+    ]);
+    return true;
+  } catch (PDOException $e) 
+  {
+      return false;
+  }
+}
+
 }

@@ -75,6 +75,7 @@ class Invoice extends Database
         [
           ':ID' => $id
         ]);
+        Log::insertLog("Invoice with id: " . $id . ' - approved', 0 );
         return true;
       } catch (PDOException $e) {
         echo $e->getMessage();
