@@ -103,13 +103,11 @@ def extract_data(invoice):
                 invoice_approval = False  # boolean True from beginning. If it ever gets False the value is changed
             services_data.append({'Description': service, 'Hours': hours, 'Cost': cost, 'Approved': validated})
     invoice_data['Approved'] = invoice_approval
-
+    extraction_completed = True
     for v in invoice_data.values():
         v = v.__str__()
         if v.__contains__('_') or v.__contains__(':') or v.__contains__('.'):
             extraction_completed = False
-        else:
-            extraction_completed = True
     # pushing array into dictionary to access data of every service (e.g. (l: 140+))
     invoice_data['Service(s)'] = services_data
     return extraction_completed, invoice_data  # returning tuple
