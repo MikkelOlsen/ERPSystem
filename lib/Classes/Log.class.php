@@ -10,7 +10,8 @@ class Log extends Database
   public static function fetchStatusLogs() : array {
       return (new self)->query("SELECT date, message
                                 FROM log
-                                WHERE error = 0")->fetchAll();
+                                WHERE error = 0
+                                ORDER BY date DESC")->fetchAll();
   }
 
   /**
@@ -21,7 +22,8 @@ class Log extends Database
   public static function fetchErrorLogs() : array {
     return (new self)->query("SELECT date, message
                               FROM log
-                              WHERE error = 1")->fetchAll();
+                              WHERE error = 1
+                              ORDER BY date DESC")->fetchAll();
 }
 
 public static function insertLog(string $message, int $error) : bool {
