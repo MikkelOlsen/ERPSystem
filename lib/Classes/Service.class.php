@@ -34,7 +34,6 @@ class Service extends Database
         ':RATE' => $rate,
         ':ID' => $id
       ]);
-      Log::insertLog("Service with id: " . $id . ' - updated & approved. </br> {Name: ' . $name . ', Hours: ' . $hours . ', Rate: '. $rate, 0 );
       return true;
     } catch (PDOException $e) {
       echo $e->getMessage();

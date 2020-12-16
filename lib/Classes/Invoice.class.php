@@ -74,8 +74,7 @@ class Invoice extends Database
         (new self)->query("UPDATE invoice SET approved = 1 WHERE id = :ID", 
         [
           ':ID' => $id
-        ]);
-        Log::insertLog("Invoice with id: " . $id . ' - approved', 0 );
+        ]);       
         return true;
       } catch (PDOException $e) {
         echo $e->getMessage();
