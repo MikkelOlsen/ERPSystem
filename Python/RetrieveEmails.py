@@ -54,10 +54,11 @@ def read_inbox():
             string_email = email_data[0][1].decode("utf-8")  # extracting
             email_message = email.message_from_string(string_email)  # converting to object
             if get_invoices(email_message):
-                db.log('Invoice Collected')
+                db.log('Found email - Invoice Collected')
             else:
                 sender_email = email_message['From']
                 SendMail.send_email(sender_email)  # sends default mail
+                db.log('Found email with no valid attachment', 1)
             mail.uid('STORE', item, '+FLAGS', '\\SEEN')  # marking email as read
 
 
