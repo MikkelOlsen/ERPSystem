@@ -61,6 +61,5 @@ def send_email(to_address):
             server.login(user, password)
             server.sendmail(user, to_address, msg.as_string())  # sending message root
             server.close()
-            db.log('Email sent')
     except:
-        db.log('Something went wrong while sending')
+        db.log('Something went wrong while sending', 1)

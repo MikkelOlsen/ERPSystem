@@ -31,11 +31,12 @@ def main():
             if completed:
                 add_invoice(invoice_data)
             else:  # Due to wrong input data
-                db.log('Extraction failure')
+                db.log('Extraction failure', 1)
                 # as from address is stored in file name
                 from_address = invoice.split()[-2].replace('<', '').replace('>', '')
                 # Informing sender
                 SendMail.send_email(from_address)  # logging in module
+                db.log('Email sent due to extraction error', 1)
         update(invoices)
 
 
