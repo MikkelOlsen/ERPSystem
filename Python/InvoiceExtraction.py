@@ -1,12 +1,11 @@
 import os
 import shutil
 from configparser import ConfigParser
-import DB_Connection as db
 import pdfplumber
-
 import SendMail
 import DB_Connection as db
 
+# Global variables
 new_invoices_dir = None
 treated_invoices_dir = None
 
@@ -28,7 +27,7 @@ def main():
     if invoices:
         for invoice in invoices:
             completed, invoice_data = extract_data(invoice)
-            db.log('Extraction Completed: ' + completed)
+            db.log('Extraction Completed: ' + completed.__str__())
             if completed:
                 add_invoice(invoice_data)
             else:  # Due to wrong input data
@@ -149,14 +148,14 @@ def get_change(current, previous):
 
 
 def add_service(service, cost):
-    """ Adding service to estimations section in db with price --> INF
+    """ Adding service to estimations section in db
     :param cost:
     :param service: item """
     query = "INSERT INTO estimations (item, price) VALUES (%s, %s);"
     values = (service, int(cost))
     db.mycursor.execute(query, values)
     db.mydb.commit()
-    print('Estimation added')
+    db.log('Estimation added')
 
 
 def add_invoice(invoice):
@@ -169,11 +168,12 @@ def add_invoice(invoice):
     values = (invoice['Invoice_ID'], invoice['Company'], invoice['Date'], invoice['Name'], invoice['Approved'])
     db.mycursor.execute(query, values)
     db.mydb.commit()
-    print('Invoice added')
+    db.log('Invoice added')
 
     for s in invoice['Service(s)']:
-        query = "INSERT INTO service (invoiceId, name, hours, rate, approved) VALUES ((SELECT MAX(id) FROM invoice), %s, %s, %s, %s);"
+        query = "INSERT INTO service (invoiceId, name, hours, rate, approved) " \
+                "VALUES ((SELECT MAX(id) FROM invoice), %s, %s, %s, %s);"
         values = (s['Description'], s['Hours'], s['Cost'], int(s['Approved']))
         db.mycursor.execute(query, values)
         db.mydb.commit()
-        print('Services added')
+        db.log('Service added')
