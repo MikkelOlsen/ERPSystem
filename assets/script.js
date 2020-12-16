@@ -7,8 +7,13 @@ function closeModal(id) {
 }
 
 function updateServices() {
+    //Initialize variables
     var postData = []
-    $('#modalTBody-' + event.target.id + ' td').each(function() {
+    var id = event.target.id
+    var err = false
+
+    //Loop through the table in the current modal and build a multi dimensional array from the table rows and columns.
+    $('#modalTBody-' + id + ' td').each(function() {
         var row = this.parentElement.rowIndex - 1 //Exclude the header row
         while (row >= postData.length) {
             postData.push([])
@@ -17,36 +22,62 @@ function updateServices() {
     })
 
 
-    
-    postData.forEach(element => {
+    $('#errorBox-' + id).html("")
+    var count = 0;
+
+    /*
+    Run an ajax call for each index in multidimensional array.
+    Data is sent to PHP API page, which handles validation of data and insertion / update.
+
+    If there are any errors returned, print these to the user, otherwise refresh the page to display new data.
+    */
+    for(const [i, element] of postData.entries()) {
         $.ajax({
             method: 'POST',
-            url: $('#baseurl').text() + 'Api/Services',
+            url: $('#baseurl').text() + 'ServicesAPI',
             data: {
                 id: element[0],
                 name: element[1],
                 hours: element[2],
                 rate: element[3]
             },
-            dataType: 'html'
+            dataType: 'JSON'
         })
         .done(function(data) {
-            console.log("SUCCESS")
+            if(data.err == true) {
+                $.each(data.msg, function(key, value) {
+                    $('#errorBox-' + id).append(value + '</br>')
+                }) 
+                err = true
+            }
+            if(count == i) {
+                if(err == false) {
+                    location.reload()
+                }
+            }
+            count++
         })
-        .fail(function() {
-            console.warn("FAILED")
+        .fail(function(data) {
+            console.log("A failure occured.")
+            console.log(data)
         });
-        
-    });
 
+        
+    }
     
-    location.reload();
+    
 }
 
 function updateInvoice() {
+      /*
+        Run an ajax call for the invoice that was clicked on.
+        Data is sent to PHP API page, which handles validation of data and insertion / update.
+
+        Then reload page to display new data.
+        */
         $.ajax({
             method: 'POST',
-            url: $('#baseurl').text() + 'Api/Invoice',
+            url: $('#baseurl').text() + 'InvoiceAPI',
             data: {
                 id: event.target.id
             },
@@ -61,5 +92,5 @@ function updateInvoice() {
         
 
     
-    location.reload();
+    location.reload()
 }

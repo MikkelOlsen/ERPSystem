@@ -14,6 +14,6 @@ if(isset($POST['id'])) {
 } else {
     echo json_encode([
         'err' => true,
-        'msg' => 'Der var intet id i POST'
+        'msg' => 'Der var intet id i POST.'
     ]);
 }

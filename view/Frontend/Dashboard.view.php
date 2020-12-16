@@ -24,7 +24,7 @@
     <h3 class="subtitle is-3">
         Invoice overview
     </h3>
-<table class="table" id="invoiceTable">
+<table class="table myTable" id="invoiceTable">
   <thead>
     <tr>
       <th>Status</th>
@@ -76,7 +76,7 @@
         <div class="modal-background"></div>
         <div class="modal-content">
         <div class="box">';
-        
+        echo '<div id="errorBox-'.$value->invoiceid.'" class="has-text-danger"></div>';
         echo '<table class="table" id="modalTable">';
         echo '<thead>';
         echo '<tr>';
@@ -104,4 +104,3 @@
 ?>
 </div>
 </div>
-<p>Test V999</p>

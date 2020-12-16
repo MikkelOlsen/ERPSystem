@@ -71,7 +71,7 @@ class Validate{
      * @param int $max (default = 5)
      * @return bool
      */
-    public static function intBetween(int $int, int $min = 4, int $max = 5) : bool
+    public static function intBetween(string $int, int $min = 4, int $max = 5) : bool
     {
         return (
             isset($int) &&
