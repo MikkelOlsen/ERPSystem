@@ -39,8 +39,7 @@ html {
 }
 
 .menu-list a.active-menu {
-  background-color: #14A76C;
-  color: #272727;
+  color: #14A76C;
 }
 
 .menu-list a:hover {
