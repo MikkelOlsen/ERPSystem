@@ -38,7 +38,7 @@ html {
   color: #14A76C;
 }
 
-.menu-list a.is-active {
+.menu-list a.active-menu {
   background-color: #14A76C;
   color: #272727;
 }
