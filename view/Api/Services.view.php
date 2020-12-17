@@ -32,12 +32,12 @@ if(isset($POST['id'])) {
     if($err == 0) {
         if(Service::updateService($POST['id'], $POST['name'], intval($POST['hours']), intval($POST['rate'])) == true)
         {
-            Log::insertLog('Service with id: ' . $id . ' - updated & approved. </br> {Name: ' . $name . ', Hours: ' . $hours . ', Rate: '. $rate, 0 );
+            Log::insertLog('Service with id: ' . $POST['id'] . ' - updated & approved. </br> {Name: ' . $POST['name'] . ', Hours: ' . $POST['hours'] . ', Rate: '. $POST['rate'], 0 );
             echo json_encode([
                 'err' => false
                 ]);
         } else {
-            Log::insertLog('Service with id: ' . $id . ' - was not updated & approved due to a database related error.', 1);
+            Log::insertLog('Service with id: ' . $POST['id'] . ' - was not updated & approved due to a database related error.', 1);
             echo json_encode([
                 'err' => true, 
                 'msg' => 'An error occured during the update.'
