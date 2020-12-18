@@ -8,11 +8,11 @@ Our solution is already being hosted on a Linux server by Digital Ocean, which m
 As the Web-Platform retrieves data from the database, there won't appear much at the dashboard page other than some test invoices sent by us in order to illustrate the concept. Whenever a service has unapproved as its status, the field of approving an invoice is locked. However, the “unapproved service” field can be clicked (on the warning icon or text) in order to change some values of services relating to the given invoice. If the “Save services” is clicked the services get approved and the “Approve invoice” button is unlocked. The following illustrates the process of approving an invoice on the Web-Platform.
 
 Step 1. 
- ![image][gitimages/step1.jpg]
+ ![image](gitimages/step1.jpg)
 Step 2.
- ![image][gitimages/step2.jpg]
+ ![image](gitimages/step2.jpg)
 Step 3.
- ![image][gitimages/step3.jpg]
+ ![image](gitimages/step3.jpg)
 
 The Web-Platform implements a logging system as well. This is mostly done for our sake as prints don't appear on the server. Instead, we chose to log some of the main tasks in our database in order to validate the program running as expected. The Web-Platform retrieves information about the log table appearing in the “Log” section
 </p>
@@ -30,10 +30,10 @@ As the solution consists of several parts including different languages, the set
 
 In case you don’t have a local Apache and MySQL server to execute the PHP part of the program, then the easiest way to fulfill these requirements is to download a program called XAMPP, this is a program which will install a local Apache and MySQL server. When this is installed, start up the XAMPP control panel and start the services “Apache” and “MySQL” as seen below.
 
- ![image][gitimages/xampp.jpg]
+ ![image](gitimages/xampp.jpg)
 
 Once this is done, navigate to your localhost and to phpmyadmin (This is usually localhost/phpmyadmin), In here, create a new database by clicking on the “New” button on the left menu, give the database a name. When it’s done, select the database, navigate to “Import” and choose the sql file located in the root folder of the downloaded repository.
- ![image][gitimages/phpmyadmin.jpg]
+ ![image](gitimages/phpmyadmin.jpg)
 
  Now that this is done, copy the rest of the code into your xampp/htdocs/{a folder you made}, now you have your own local Apache and MySQL server.
 </p>
