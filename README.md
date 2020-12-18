@@ -1,4 +1,3 @@
-[2:35 AM] Mark Aastrup Cederborg
 # README
 Our solution is already being hosted on a Linux server by Digital Ocean, which means that it’s currently accessible by following a URL - 174.138.13.127/. This URL gives the viewer access to the entire Web-Platform part of the project, with the Python script running in the background. In order to utilize the entire program, a mail is needed to be sent to hovedkontorvirksomhedx@gmail.com.
 
