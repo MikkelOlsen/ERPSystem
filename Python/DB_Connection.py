@@ -19,7 +19,7 @@ def connect_db():
         auth_plugin='mysql_native_password'
     )
     if mydb:
-        mycursor = mydb.cursor(buffered=True)  # for executing commands
+        mycursor = mydb.cursor(buffered=True)  # for executing commands # creating "cached zone" not to get overwritten
         log('Database Connection Established.')
 
 

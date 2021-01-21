@@ -106,7 +106,7 @@ def extract_data(invoice):
     extraction_completed = True
     for v in invoice_data.values():
         v = v.__str__()
-        if v.__contains__('_') or v.__contains__(':') or v.__contains__('.'):
+        if v.__contains__('_') or v.__contains__(':') or v.__contains__('.') or not v:
             extraction_completed = False
     # pushing array into dictionary to access data of every service (e.g. (l: 140+))
     invoice_data['Service(s)'] = services_data
@@ -122,7 +122,7 @@ def estimation_check(item, cost):
     validated = False
     db.mycursor.execute("SELECT * FROM estimations;")
     for row in db.mycursor:
-        if item == row[0]:
+        if item == row[0]:  # should have been 1 and 2 as we have ID at first entry
             estimation = row[1]
             diff = get_change(float(cost), float(estimation))  # type cast
             if diff <= 20:

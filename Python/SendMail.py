@@ -40,14 +40,14 @@ def send_email(to_address):
     # _maintype as the Content-Type major type (e.g. text or image)
     # and _params is a parameter key/value dictionary
     msgAlternative.attach(text)
-    with open(logo, 'rb') as l:  # closes automatically
+    with open(logo, 'rb') as l:  # closes automatically # rb = read binary
         msgImage = MIMEImage(l.read())
 
     with open(invoice_template, 'rb') as it:  # closes automatically
         msgAttachment = MIMEMultipart(it.read())
 
     # Define the image's ID as referenced above
-    msgImage.add_header('Content-ID', '<image1>')
+    msgImage.add_header('Content-Disposition', 'inline')
     msg.attach(msgImage)
 
     # adding attachment

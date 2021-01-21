@@ -51,7 +51,9 @@ def read_inbox():
             # Returned data are tuples of message part envelope and data
             # The latter type of payload is indicated as multipart/* or message/rfc822
             _, email_data = mail.fetch(item, '(RFC822)')  # returns email in byte form
-            string_email = email_data[0][1].decode("utf-8")  # extracting
+            # extracting the body, which is raw text of the whole
+            # email including headers and alternate payloads
+            string_email = email_data[0][1].decode("utf-8")
             email_message = email.message_from_string(string_email)  # converting to object
             if get_invoices(email_message):
                 db.log('Found email - Invoice Collected')
@@ -66,16 +68,16 @@ def get_invoices(msg):
     invoice_collected = False
     sender_email = msg['From']
     for part in msg.walk():  # iterates through email object
-        if part.get_content_maintype() == 'multipart':
+        if part.get_content_maintype() == 'multipart':  # multipart/alternative = html/text
             continue  # skipping to next iteration of msg.walk()
-        if part.get_content_disposition() is None:
+        if part.get_content_disposition() is None:  # header
             continue
         file_name = part.get_filename()
         if not file_name.endswith('.pdf'):
             continue
         if bool(file_name):
             file_path = os.path.join(attachment_dir, sender_email + ' ' + uuid.uuid4().__str__() + '_' + file_name)
-            with open(file_path, 'wb') as f:  # wb = wide binary
+            with open(file_path, 'wb') as f:  # wb = write binary
                 f.write(part.get_payload(decode=True))
             invoice_collected = True
     return invoice_collected
